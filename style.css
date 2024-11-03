@@ -12,14 +12,61 @@
 
 #calculator {
     background-color: gray;
-    height: 400px;
-    width: 600px;
+    height: 450px;
+    width: 350px;
     border-radius: 20px;
     padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #inputBox{
     height: 60px;
     width: 100%;
     background-color: aliceblue;
+}
+
+#btnsContainer {
+    display: flex;
+    height: 100%;
+}
+
+/* TODO: Make the buttons responsive for small screen sizes */
+
+#numsContainer {
+    /* background-color: red; */
+    flex: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#numsContainer > button {
+    /* color: blue; */
+    font-size: 48px;
+    font-weight: 600;
+    width: 60px;
+    flex-grow: 1;
+}
+
+#operatorsContainer {
+    /* background-color: blue; */
+    flex: 1;
+    padding: 5px 0 ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#operatorsContainer > button {
+    /* color: red; */
+    font-size: 18px;
+    font-weight: 600;
+    width: 50px;
+    flex: 1;
 }
