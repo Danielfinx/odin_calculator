@@ -1,71 +1,86 @@
+// Select the DOM nodes for manipulation
 const display = document.querySelector("#inputBox");
 const btns = document.querySelectorAll("button");
 
-let operator = '';
-let firstOperand = '';
-let secondOperand = '';
+// Initialize control global variables
+let clearScreen = false;    // Control when the screen should be cleared
+let prevOperand = '';   // Store the last Operand or Operation result
+let currentOperator = '';   // Store the last selected operator
 
-
-const add = (a, b) => {
-    return +a + +b;
+// Function that reset the global variables
+const clearInfo = () => {
+    clearScreen = false;
+    prevOperand = '';
+    currentOperator = '';
 }
 
-const substract = (a, b) => {
-    return +a - +b;
+// Function that validate if the text content of the display is a valid operand
+const validateOperand = (string) => {
+    return string != '' && typeof(+string) == 'number' && !isNaN(+string);
 }
 
-const multiply = (a, b) => {
-    return +a * +b;
-}
-
-const divide = (a, b) => {
-    clear();
-    return b == 0 ? "lmao" : +a / +b;
-}
-
-const clear = () => {
-    operator = '';
-    firstOperand = '';
-    secondOperand = '';
-}
-
+// Function that made the respective operation
 const operate = (a, b, operator) => {
+    let result = 0;
     switch (operator) {
         case '+':
-            return add(a, b);
+            result = +a + +b;
+            break;
         case '-':
-            return substract(a, b);
+            result = +a - +b;
+            break;
         case '*':
-            return multiply(a, b);
+            result = +a * +b;
+            break;
         case '/':
-            return divide(a, b);
+            if (+b == 0){
+                clearInfo();
+                return "lmao";  // Can't divide by 0 lmao
+            }
+            result = +a / +b;
+            break;
         default:
-            clear();
+            clearInfo();
             return 'Syntaxis Error!';
     }
-}
-
-const displayText = (string) => {
-    if (isNaN(+display.textContent)) {
-        display.textContent = '';
-    }
-    if (display.textContent.length < 15) {
-        display.textContent += string;
-    }
-}
-
-const addOperator = (op) => {
-    const current = display.textContent;
-    if (current != '' && typeof(+current) == 'number'){
-        if (!firstOperand) {
-            firstOperand = +current;
-        } else if (operator) {
-            display.textContent = operate(firstOperand, current, operator);
+    if (result%1 != 0) {    // If the result isn't a Integer
+        if (result.toString().split('.')[1].length > 4){    // If the result have more than 4 decimals they're fixed to 4
+            result= result.toFixed(4);
         }
     }
-    operator = op;
+    if (result.toString().length > 15) {    // If the final result has a length more than 15 it wouldn't fit the screen,
+        clearInfo()                         // i could reduce the font-size but my lazy ass don't want to
+        return "too big lol"
+    }
+    return result;
 }
 
+// Function that write the numbers in the screen
+const displayText = (number) => {
+    if (!validateOperand(display.textContent) || clearScreen) { // Clear the screen if the current text content is "invalid" like a error masage 
+        display.textContent = '';                               // or if the clear screen flag is true
+        clearScreen = false;
+    }
+    if (display.textContent.length < 15) {  // More than 15 character doesn't fit the screen size
+        display.textContent += number;
+    }
+}
+
+//  Add a new operator
+const addOperator = (newOperator) => {
+    if (validateOperand(display.textContent)){  // If the current text content is a valid operand
+        if (!prevOperand) {
+            prevOperand = display.textContent;  // If there is no previous operand then the current text content is set as such
+        } else {
+            prevOperand = operate(prevOperand, display.textContent, currentOperator);   // If there is a previous operand then the result of the
+            display.textContent = prevOperand;                                          // previous operation is set as the new previous operand
+        }
+        currentOperator = newOperator;  // Set the new operator
+        clearScreen = true;             // "Turn on" the clearScrean flag to allow a new operand to be introduced
+    }
+}
+
+//  Loop that set the event listener to every button
 btns.forEach((btn) => {
     btn.addEventListener("click", () => {
         switch (btn.id) {
@@ -100,7 +115,9 @@ btns.forEach((btn) => {
                 displayText('9');
                 break;
             case 'dot':
-                displayText('.');
+                if (!display.textContent.includes('.')){    // There can be only one 'dot' per operand
+                    displayText('.');
+                }
                 break;
             case 'addOp':
                 addOperator('+');
@@ -114,12 +131,15 @@ btns.forEach((btn) => {
             case 'divOp':
                 addOperator('/');
                 break;
-            case 'clearBtn':
-                clear();
-                display.textContent= '';
+            case 'clearBtn':    // Reset the global variables and the text content
+                clearInfo();
+                display.textContent = '';
                 break;
             case 'enterBtn':
-                display.textContent= operate();
+                if (prevOperand && currentOperator && validateOperand(display.textContent)) {
+                    display.textContent = operate(prevOperand, display.textContent, currentOperator);
+                    clearInfo();
+                }
                 break;
             default:
                 display.textContent= 'ERROR!';
