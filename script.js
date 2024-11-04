@@ -1,20 +1,32 @@
 const display = document.querySelector("#inputBox");
 const btns = document.querySelectorAll("button");
 
+let operator = '';
+let firstOperand = '';
+let secondOperand = '';
+
+
 const add = (a, b) => {
-    return a + b;
+    return +a + +b;
 }
 
 const substract = (a, b) => {
-    return a - b;
+    return +a - +b;
 }
 
 const multiply = (a, b) => {
-    return a * b;
+    return +a * +b;
 }
 
 const divide = (a, b) => {
-    return b == 0 ? "Can't divide by 0" : a / b;
+    clear();
+    return b == 0 ? "lmao" : +a / +b;
+}
+
+const clear = () => {
+    operator = '';
+    firstOperand = '';
+    secondOperand = '';
 }
 
 const operate = (a, b, operator) => {
@@ -28,59 +40,82 @@ const operate = (a, b, operator) => {
         case '/':
             return divide(a, b);
         default:
+            clear();
             return 'Syntaxis Error!';
     }
+}
+
+const displayText = (string) => {
+    if (isNaN(+display.textContent)) {
+        display.textContent = '';
+    }
+    if (display.textContent.length < 15) {
+        display.textContent += string;
+    }
+}
+
+const addOperator = (op) => {
+    const current = display.textContent;
+    if (current != '' && typeof(+current) == 'number'){
+        if (!firstOperand) {
+            firstOperand = +current;
+        } else if (operator) {
+            display.textContent = operate(firstOperand, current, operator);
+        }
+    }
+    operator = op;
 }
 
 btns.forEach((btn) => {
     btn.addEventListener("click", () => {
         switch (btn.id) {
             case 'num0':
-                display.textContent+= '0';
+                displayText('0');
                 break;
             case 'num1':
-                display.textContent+= '1';
+                displayText('1');
                 break;
             case 'num2':
-                display.textContent+= '2';
+                displayText('2');
                 break;
             case 'num3':
-                display.textContent+= '3';
+                displayText('3');
                 break;
             case 'num4':
-                display.textContent+= '4';
+                displayText('4');
                 break;
             case 'num5':
-                display.textContent+= '5';
+                displayText('5');
                 break;
             case 'num6':
-                display.textContent+= '6';
+                displayText('6');
                 break;
             case 'num7':
-                display.textContent+= '7';
+                displayText('7');
                 break;
             case 'num8':
-                display.textContent+= '8';
+                displayText('8');
                 break;
             case 'num9':
-                display.textContent+= '9';
+                displayText('9');
                 break;
             case 'dot':
-                display.textContent+= '.';
+                displayText('.');
                 break;
             case 'addOp':
-                display.textContent+= '+';
+                addOperator('+');
                 break;
             case 'subsOp':
-                display.textContent+= '-';
+                addOperator('-');
                 break;
             case 'multOp':
-                display.textContent+= 'x';
+                addOperator('*');
                 break;
             case 'divOp':
-                display.textContent+= '/';
+                addOperator('/');
                 break;
             case 'clearBtn':
+                clear();
                 display.textContent= '';
                 break;
             case 'enterBtn':

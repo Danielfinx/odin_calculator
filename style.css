@@ -8,13 +8,14 @@
 #container {
     display: flex;
     justify-content: center;
-    padding-top: 50px;
+    padding-top: 30px;
 }
 
 #calculator {
     background-color: gray;
     height: 450px;
     width: 350px;
+    border: solid 4px black;
     border-radius: 20px;
     padding: 40px;
     display: flex;
@@ -30,13 +31,19 @@
     align-items: center;
     justify-content: flex-end;
     padding: 0 20px;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 600;
+    border: 2px solid black;
+    border-radius: 4px;
 }
 
 #btnsContainer {
     display: flex;
     height: 100%;
+}
+
+button {
+    border-radius: 5px 10px 15px 20px;
 }
 
 /* TODO: Make the buttons responsive for small screen sizes */
