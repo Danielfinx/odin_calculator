@@ -1,22 +1,22 @@
 ![](https://img.shields.io/badge/Uneweb-blue)
 
-# Project Name
+# Odin Calculator
 
-> One paragraph statement about the project.
+> A calculator application for The Odin Project
 
 ![screenshot](./app_screenshot.png)
 
-Additional description about the project and its features.
+A simple calculator application that allows addition, subtraction, multiplication and division operations.
 
 ## Built With
 
-- Major languages
-- Frameworks
-- Technologies used
+- HTML5
+- CSS3
+- JavaScript
 
 ## Live Demo
 
-[Live Demo Link](https://livedemo.com)
+[Live Demo Link](https://danielfinx.github.io/odin_calculator/)
 
 
 ## Getting Started
