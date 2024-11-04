@@ -1,15 +1,16 @@
 // Select the DOM nodes for manipulation
-const display = document.querySelector('#inputBox');
+const display = document.querySelector('#operationBox');
+const historial = document.querySelector('#historialBox');
 const buttons = document.querySelectorAll('button');
 
 // Initialize control global variables
-let clearScreen = false;    // Control when the screen should be cleared
+let clearScreen = true;    // Control when the screen should be cleared
 let prevOperand = '';   // Store the last Operand or Operation result
 let currentOperator = '';   // Store the last selected operator
 
 // Function that reset the global variables
 const clearInfo = () => {
-    clearScreen = false;
+    clearScreen = true;
     prevOperand = '';
     currentOperator = '';
 }
@@ -22,6 +23,7 @@ const validateOperand = (string) => {
 // Function that made the respective operation
 const operate = (a, b, operator) => {
     let result = 0;
+    historial.textContent = `${a} ${operator} ${b} =`;  //Update the historial of the last operation
     switch (operator) {
         case '+':
             result = +a + +b;
@@ -142,7 +144,8 @@ buttons.forEach((button) => {
                 break;
             case 'clearBtn':    // Reset the global variables and the text content
                 clearInfo();
-                display.textContent = '';
+                display.textContent = '0';
+                historial.textContent = '=';
                 buttons.forEach(btn => btn.classList.remove('active-operator'));
                 break;
             case 'enterBtn':
