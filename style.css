@@ -5,6 +5,10 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+body {
+    background-color: wheat;
+}
+
 #container {
     display: flex;
     justify-content: center;
@@ -60,6 +64,7 @@ button {
     font-weight: 600;
     width: 30%;
     flex-grow: 2;
+    background-color: seashell;
 }
 
 #dot {
@@ -79,4 +84,9 @@ button {
     font-size: 28px;
     font-weight: 600;
     flex: 1;
+    background-color: goldenrod;
+}
+
+.active-operator, button:active {
+    filter: brightness(0.6);
 }

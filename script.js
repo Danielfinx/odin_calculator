@@ -1,6 +1,6 @@
 // Select the DOM nodes for manipulation
-const display = document.querySelector("#inputBox");
-const btns = document.querySelectorAll("button");
+const display = document.querySelector('#inputBox');
+const buttons = document.querySelectorAll('button');
 
 // Initialize control global variables
 let clearScreen = false;    // Control when the screen should be cleared
@@ -35,7 +35,7 @@ const operate = (a, b, operator) => {
         case '/':
             if (+b == 0){
                 clearInfo();
-                return "lmao";  // Can't divide by 0 lmao
+                return 'lmao';  // Can't divide by 0 lmao
             }
             result = +a / +b;
             break;
@@ -50,7 +50,7 @@ const operate = (a, b, operator) => {
     }
     if (result.toString().length > 15) {    // If the final result has a length more than 15 it wouldn't fit the screen,
         clearInfo()                         // i could reduce the font-size but my lazy ass don't want to
-        return "too big lol"
+        return 'too big lol';
     }
     return result;
 }
@@ -81,9 +81,18 @@ const addOperator = (newOperator) => {
 }
 
 //  Loop that set the event listener to every button
-btns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        switch (btn.id) {
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (button.id == 'addOp' ||
+            button.id == 'subsOp' ||
+            button.id == 'multOp' ||
+            button.id == 'divOp'
+        ) {     //  Add a shadow effect to the most recent operator button
+            buttons.forEach(btn => btn.classList.remove('active-operator'));
+            button.classList.add('active-operator');
+        }
+        
+        switch (button.id) {
             case 'num0':
                 displayText('0');
                 break;
@@ -134,16 +143,19 @@ btns.forEach((btn) => {
             case 'clearBtn':    // Reset the global variables and the text content
                 clearInfo();
                 display.textContent = '';
+                buttons.forEach(btn => btn.classList.remove('active-operator'));
                 break;
             case 'enterBtn':
                 if (prevOperand && currentOperator && validateOperand(display.textContent)) {
                     display.textContent = operate(prevOperand, display.textContent, currentOperator);
                     clearInfo();
                 }
+                buttons.forEach(btn => btn.classList.remove('active-operator'));
                 break;
             default:
                 display.textContent= 'ERROR!';
                 break;
         }
+
     })
 })
