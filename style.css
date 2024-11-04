@@ -46,21 +46,16 @@ button {
     border-radius: 5px 10px 15px 20px;
 }
 
-/* TODO: Make the buttons responsive for small screen sizes */
-
 #numsContainer {
-    /* background-color: red; */
     flex: 3;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* align-items: center; */
     padding: 0 5px;
     gap: 5px;
 }
 
 #numsContainer > button {
-    /* color: blue; */
     font-size: 36px;
     font-weight: 600;
     width: 30%;
@@ -72,20 +67,16 @@ button {
 }
 
 #operatorsContainer {
-    /* background-color: blue; */
     flex: 1;
     padding: 0 5px;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     gap: 5px;
 }
 
 #operatorsContainer > button {
-    /* color: red; */
     font-size: 28px;
     font-weight: 600;
-    /* width: 50px; */
     flex: 1;
 }
